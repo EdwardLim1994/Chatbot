@@ -15,7 +15,40 @@ services:
                     devices:
                         - driver: nvidia
                           count: 1
-                          capabilities: [gpu]
+                          capabilities:
+                              - gpu
+
+    postgres:
+        image: postgres:latest
+        ports:
+            - 5432:5432
+        restart: unless-stopped
+        volumes:
+            - postgres:/var/lib/postgresql/data
+        env_file:
+            - .env
+        networks:
+            - chatbot
+
+    adminer:
+        image: adminer:latest
+        ports:
+            - 8080:8080
+        restart: unless-stopped
+        networks:
+            - chatbot
+        depends_on:
+            - postgres
+        environment:
+            ADMINER_DEFAULT_SERVER: postgres
+            ADMINER_DEFAULT_TYPE: postgresql
+            ADMINER_DEFAULT_USER: $POSTGRES_USER
+            ADMINER_DEFAULT_PASSWORD: $POSTGRES_PASSWORD
+            ADMINER_DEFAULT_DB: $POSTGRES_DB
 
 volumes:
     ollama:
+    postgres:
+
+networks:
+    chatbot:
