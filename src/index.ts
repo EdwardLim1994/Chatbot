@@ -6,6 +6,7 @@ import {
 	findAccount,
 	createAccount,
 	deleteAccount,
+	updateAccount,
 	refreshToken,
 } from "./controllers/AccountController";
 import { login, logout } from "./controllers/AuthenticationController";
@@ -14,7 +15,15 @@ import {
 	if_user_token_valid,
 	if_user_exist,
 } from "./middlewares/user.middleware";
-import { generateChat, streamChat } from "./controllers/ChatController";
+import { generateChat } from "./controllers/ChatController";
+import {
+	createContext,
+	deleteContext,
+	deselectContext,
+	findContexts,
+	selectContext,
+	updateContext,
+} from "./controllers/ContextController";
 
 const app = new Elysia()
 	.use(
@@ -30,7 +39,6 @@ const app = new Elysia()
 	)
 	.group("/user", (app) =>
 		app
-
 			.post("/create", createAccount, {
 				body: t.Object({
 					name: t.String(),
@@ -55,17 +63,21 @@ const app = new Elysia()
 								id: t.String(),
 							}),
 						})
-			)
-			.guard(
-				{
-					beforeHandle: if_user_exist,
-				},
-				(app) =>
-					app
 						.get("/get", findAccount, {
 							query: t.Object({
 								username: t.Optional(t.String()),
 								id: t.Optional(t.String()),
+							}),
+						})
+						.patch("/update", updateAccount, {
+							beforeHandle: if_user_token_valid,
+							body: t.Object({
+								id: t.String(),
+								data: t.Object({
+									username: t.Optional(t.String()),
+									password: t.Optional(t.String()),
+									keyword: t.Optional(t.String()),
+								}),
 							}),
 						})
 						.delete("/delete", deleteAccount, {
@@ -88,17 +100,59 @@ const app = new Elysia()
 			beforeHandle: if_user_login,
 		},
 		(app) =>
-			app.group("/chat", (app) =>
-				app
-					.get("/", generateChat, {
+			app
+				.group("/chat", (app) =>
+					app.get("/", generateChat, {
+						beforeHandle: if_user_token_valid,
 						query: t.Object({
+							contextId: t.Optional(t.String()),
 							prompt: t.String(),
 						}),
 					})
-					.ws("/stream", {
-						message: streamChat,
-					})
-			)
+				)
+				.group("/context", (app) =>
+					app
+						.get("/get", findContexts, {
+							beforeHandle: if_user_token_valid,
+						})
+						.post("/create", createContext, {
+							beforeHandle: if_user_token_valid,
+							body: t.Object({
+								name: t.String(),
+								context: t.String(),
+								user_id: t.String(),
+							}),
+						})
+						.patch("/update", updateContext, {
+							beforeHandle: if_user_token_valid,
+							body: t.Object({
+								id: t.String(),
+								data: t.Object({
+									name: t.Optional(t.String()),
+									context: t.Optional(t.String()),
+								}),
+							}),
+						})
+						.delete("/delete", deleteContext, {
+							beforeHandle: if_user_token_valid,
+							body: t.Object({
+								id: t.String(),
+							}),
+						})
+						.post("/select", selectContext, {
+							beforeHandle: if_user_token_valid,
+							body: t.Object({
+								user_id: t.String(),
+								context_id: t.String(),
+							}),
+						})
+						.post("/deselect", deselectContext, {
+							beforeHandle: if_user_token_valid,
+							body: t.Object({
+								user_id: t.String(),
+							}),
+						})
+				)
 	)
 	.get("/", () => "Hello world")
 	.listen(3000);

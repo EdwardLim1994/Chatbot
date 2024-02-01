@@ -41,3 +41,34 @@ export type AuthenticationType = {
 export type AuthenticationTokenType = {
 	token: string;
 };
+
+export type CreateContextType = {
+	user_id: string;
+	name: string;
+	context: string;
+};
+
+export type UpdateContextType = {
+	id: string;
+	data: Prisma.ContextUpdateInput;
+};
+
+export type DeleteContextType = {
+	id: string;
+};
+
+export type FindContextType = {
+	id?: string;
+	name?: string;
+};
+
+export type SelectContextType = {
+	user_id: string;
+	context_id?: string | null;
+};
+
+export type GenerateChatType = {
+	prompt: string;
+	contextId?: string;
+	token: string;
+};
