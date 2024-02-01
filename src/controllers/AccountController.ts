@@ -15,7 +15,6 @@ export const findAccount = async (ctx: any) => {
 			selectFields: {
 				id: true,
 				username: true,
-				context: true,
 				createdAt: true,
 			},
 		})
@@ -39,6 +38,13 @@ export const deleteAccount = async (ctx: any) => {
 		.deleteAccount({ id: ctx.body.id })
 		.then((res) => buildSuccessResult(res))
 		.catch((err) => buildFailedResult(err));
+};
+
+export const updateAccount = async (ctx: any) => {
+	return account.updateAccount({
+		id: ctx.body.id,
+		data: ctx.body.data,
+	});
 };
 
 export const refreshToken = async (ctx: any) => {

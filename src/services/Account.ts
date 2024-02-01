@@ -19,7 +19,11 @@ class Account {
 
 	public async findSingleAccount(payload: FindUserType) {
 		return await this.prisma.user.findFirst({
-			where: { username: payload.username },
+			where: {
+				username: payload?.username,
+				id: payload?.id,
+				token: payload?.token,
+			},
 			select: payload.selectFields,
 		});
 	}
