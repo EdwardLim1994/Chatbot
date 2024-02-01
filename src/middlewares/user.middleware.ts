@@ -38,7 +38,6 @@ export const if_user_exist = async (ctx: any) => {
 			selectFields: {
 				id: true,
 				username: true,
-				context: true,
 				createdAt: true,
 			},
 		})
