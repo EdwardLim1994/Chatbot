@@ -11,14 +11,15 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  username  String    @unique @db.VarChar(20)
-  password  String
-  keyword   String    @unique @db.VarChar(50)
-  token     String?   @unique
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Context   Context[]
+  id              String    @id @default(cuid())
+  username        String    @unique @db.VarChar(20)
+  password        String
+  keyword         String    @unique @db.VarChar(50)
+  token           String?   @unique
+  selectedContext String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  Context         Context[]
 
   @@map("users")
 }
