@@ -10,13 +10,13 @@
 		"@prisma/client": "^5.8.1",
 		"elysia": "latest",
 		"lodash": "^4.17.21",
-		"modelfusion": "^0.131.0",
-		"prisma": "^5.8.1"
+		"modelfusion": "^0.131.0"
 	},
 	"devDependencies": {
 		"@types/crypto-js": "^4.2.2",
 		"@types/lodash": "^4.14.202",
-		"bun-types": "latest"
+		"bun-types": "latest",
+		"prisma": "^5.8.1"
 	},
 	"module": "src/index.js"
 }
