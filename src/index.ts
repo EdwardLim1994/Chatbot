@@ -1,6 +1,5 @@
 import { Elysia, t } from "elysia";
 import { swagger } from "@elysiajs/swagger";
-import { html } from "@elysiajs/html";
 import jwt from "@elysiajs/jwt";
 
 import {
@@ -27,7 +26,6 @@ import {
 } from "./controllers/ContextController";
 
 const app = new Elysia()
-	.use(html())
 	.use(
 		swagger({
 			documentation: {
@@ -177,7 +175,6 @@ const app = new Elysia()
 							body: t.Object({
 								name: t.String(),
 								context: t.String(),
-								user_id: t.String(),
 							}),
 							detail: { tags: ["Chat Context"] },
 						})
@@ -202,32 +199,22 @@ const app = new Elysia()
 						.post("/select", selectContext, {
 							beforeHandle: if_user_token_valid,
 							body: t.Object({
-								user_id: t.String(),
 								context_id: t.String(),
 							}),
 							detail: { tags: ["Chat Context"] },
 						})
 						.post("/deselect", deselectContext, {
 							beforeHandle: if_user_token_valid,
-							body: t.Object({
-								user_id: t.String(),
-							}),
+
 							detail: { tags: ["Chat Context"] },
 						})
 				)
 	)
-	.get("/", () => (
-		<>
-			<h1>Chatbot REST API Server</h1>
-			<br />
-			<p>
-				Welcome to Chatbot, powered by Ollama and built using ElysiaJS,
-				a Bun based backend server that delivers extra-ordinary
-				performance and even faster than Expressjs. Open{" "}
-				<a href='/swagger'>this link</a> to refer the API.
-			</p>
-		</>
-	))
+	.get(
+		"/",
+		() =>
+			"Welcome to Chatbot, powered by Ollama and built using ElysiaJS, a Bun based backend server that delivers extra-ordinary performance and even faster than Expressjs. Open <a href='/swagger'>this</a> for refering API."
+	)
 	.listen(3000);
 
 console.log(
