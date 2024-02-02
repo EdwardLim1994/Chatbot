@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import type {
 	CreateUserType,
 	DeleteUserType,
@@ -6,7 +6,6 @@ import type {
 	UpdateUserType,
 } from "../libs/types";
 
-import { map } from "lodash";
 import Prisma from "./Prisma";
 import { generateToken } from "../libs/helpers";
 
