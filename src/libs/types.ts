@@ -43,7 +43,7 @@ export type AuthenticationTokenType = {
 };
 
 export type CreateContextType = {
-	user_id: string;
+	token: string;
 	name: string;
 	context: string;
 };
@@ -63,8 +63,8 @@ export type FindContextType = {
 };
 
 export type SelectContextType = {
-	user_id: string;
 	context_id?: string | null;
+	token: string;
 };
 
 export type GenerateChatType = {

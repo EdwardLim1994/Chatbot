@@ -8,7 +8,7 @@ export const createContext = async (ctx: any) => {
 		.createContext({
 			name: ctx.body.name,
 			context: ctx.body.context,
-			user_id: ctx.body.user_id,
+			token: ctx.headers["x-auth-token"],
 		})
 		.then((res) => buildSuccessResult(res))
 		.catch((err) => buildFailedResult(err));
@@ -46,7 +46,7 @@ export const updateContext = async (ctx: any) => {
 export const selectContext = async (ctx: any) => {
 	return context
 		.selectContext({
-			user_id: ctx.body.user_id,
+			token: ctx.headers["x-auth-token"],
 			context_id: ctx.body.context_id,
 		})
 		.then((res) => buildSuccessResult(res))
@@ -55,7 +55,7 @@ export const selectContext = async (ctx: any) => {
 export const deselectContext = async (ctx: any) => {
 	return context
 		.selectContext({
-			user_id: ctx.body.user_id,
+			token: ctx.headers["x-auth-token"],
 			context_id: null,
 		})
 		.then((res) => buildSuccessResult(res))

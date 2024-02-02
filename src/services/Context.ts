@@ -8,13 +8,26 @@ import {
 	SelectContextType,
 	UpdateContextType,
 } from "../libs/types";
+import { isEmpty } from "lodash";
 
 class Context {
 	private prisma: PrismaClient = Prisma.instance();
 	private accountService: Account = new Account();
 
 	public async createContext(payload: CreateContextType) {
-		return await this.prisma.context.create({ data: payload });
+		const user = await this.accountService.findSingleAccount({
+			token: payload.token,
+		});
+
+		if (isEmpty(user)) throw new Error("User not found");
+
+		return await this.prisma.context.create({
+			data: {
+				name: payload.name,
+				context: payload.context,
+				user_id: user.id,
+			},
+		});
 	}
 
 	public async updateContext(payload: UpdateContextType) {
@@ -42,8 +55,14 @@ class Context {
 		return context;
 	}
 	public async selectContext(payload: SelectContextType) {
+		const user = await this.accountService.findSingleAccount({
+			token: payload.token,
+		});
+
+		if (isEmpty(user)) throw new Error("User not found");
+
 		return this.accountService.updateAccount({
-			id: payload.user_id,
+			id: user.id,
 			data: {
 				selectedContext: payload.context_id,
 			},
