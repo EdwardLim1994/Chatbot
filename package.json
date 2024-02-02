@@ -1,25 +1,26 @@
 {
-  "name": "chatbot",
-  "version": "1.0.50",
-  "scripts": {
-    "dev": "bun run --watch src/index.ts"
-  },
-  "dependencies": {
-    "@elysiajs/jwt": "^0.8.0",
-    "@elysiajs/swagger": "^0.8.5",
-    "@prisma/adapter-pg": "^5.8.1",
-    "@prisma/client": "^5.8.1",
-    "elysia": "latest",
-    "modelfusion": "^0.131.0",
-    "pg": "^8.11.3",
-    "prisma": "^5.8.1"
-  },
-  "devDependencies": {
-    "@types/crypto-js": "^4.2.2",
-    "@types/lodash": "^4.14.202",
-    "@types/pg": "^8.11.0",
-    "bun-types": "latest",
-    "lodash": "^4.17.21"
-  },
-  "module": "src/index.js"
+	"name": "chatbot",
+	"version": "1.0.50",
+	"scripts": {
+		"dev": "bun run --watch src/index.tsx"
+	},
+	"dependencies": {
+		"@elysiajs/html": "^0.8.0",
+		"@elysiajs/jwt": "^0.8.0",
+		"@elysiajs/swagger": "^0.8.5",
+		"@prisma/adapter-pg": "^5.8.1",
+		"@prisma/client": "^5.8.1",
+		"elysia": "latest",
+		"modelfusion": "^0.131.0",
+		"pg": "^8.11.3",
+		"prisma": "^5.8.1"
+	},
+	"devDependencies": {
+		"@types/crypto-js": "^4.2.2",
+		"@types/lodash": "^4.14.202",
+		"@types/pg": "^8.11.0",
+		"bun-types": "latest",
+		"lodash": "^4.17.21"
+	},
+	"module": "src/index.js"
 }
