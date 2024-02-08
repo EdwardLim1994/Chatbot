@@ -29,7 +29,7 @@ class Ollama {
 			system = context[0]?.context;
 		}
 
-		const text = await generateText({
+		return await generateText({
 			model: this.LLM.ChatTextGenerator({
 				model: this.MODEL,
 			}).withInstructionPrompt(),
@@ -38,11 +38,6 @@ class Ollama {
 				instruction: payload.prompt,
 			},
 		});
-
-		return {
-			context: system,
-			message: text,
-		};
 	}
 }
 

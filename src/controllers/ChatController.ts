@@ -10,8 +10,7 @@ export const generateChat = async (ctx: any) => {
 		.then((res) =>
 			buildSuccessResult({
 				prompt: ctx.query.prompt,
-				context: res.context,
-				reply: res.message,
+				reply: res,
 			})
 		)
 		.catch((err) => buildFailedResult(err));
