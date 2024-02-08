@@ -175,6 +175,7 @@ const app = new Elysia()
 							body: t.Object({
 								name: t.String(),
 								context: t.String(),
+								default: t.Optional(t.Boolean()),
 							}),
 							detail: { tags: ["Chat Context"] },
 						})

@@ -8,6 +8,7 @@ export const createContext = async (ctx: any) => {
 		.createContext({
 			name: ctx.body.name,
 			context: ctx.body.context,
+			default: ctx.body.default,
 			token: ctx.headers["x-auth-token"],
 		})
 		.then((res) => buildSuccessResult(res))

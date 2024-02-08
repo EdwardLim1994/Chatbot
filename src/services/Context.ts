@@ -21,13 +21,22 @@ class Context {
 
 		if (isEmpty(user)) throw new Error("User not found");
 
-		return await this.prisma.context.create({
+		const context = await this.prisma.context.create({
 			data: {
 				name: payload.name,
 				context: payload.context,
 				user_id: user.id,
 			},
 		});
+
+		if (payload.default && !isEmpty(context)) {
+			await this.selectContext({
+				token: payload.token,
+				context_id: context?.id,
+			});
+		}
+
+		return context;
 	}
 
 	public async updateContext(payload: UpdateContextType) {

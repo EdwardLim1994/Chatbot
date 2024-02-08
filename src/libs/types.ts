@@ -45,6 +45,7 @@ export type AuthenticationTokenType = {
 export type CreateContextType = {
 	token: string;
 	name: string;
+	default?: boolean;
 	context: string;
 };
 
